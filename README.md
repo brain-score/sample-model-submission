@@ -1,8 +1,8 @@
 
-#Brainscore submission template
+# Brainscore submission template
 This is the template module, to add your neural network implementation and submit it to brain-score. It provides examples and template methods for an easy submission.
 
-##Getting started
+## Getting started
 To submit a model to brain-score, the source code has to be submitted as a zip file. The framework will unpack und install the code and its dependencies in a sandboxed environment and execute the brain-score benchmarks on it.
 One submission can contain multiple models. Once all models are scored on the benchmarks, an email with the results is sent to the submittor. The results will *NOT* be published somewhere without explicit approval of the repository owner.
 Additionally the submitted content will not be accessible to any other than the automated benchmark framework, no human will see the implementations.
