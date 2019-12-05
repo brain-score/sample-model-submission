@@ -41,7 +41,7 @@ def test_base_models(module):
 
 
 def test_processing(model, module):
-    os.environ['RESULTCACHING_DISABLE'] = 'model_tools.activations.core.ActivationsExtractorHelper'
+    os.environ['RESULTCACHING_DISABLE'] = '1'
     model_instance = module.get_model(model)
     layers = module.get_layers(model)
     brain_model = ModelCommitment(identifier=model, activations_model=model_instance,

@@ -1,5 +1,5 @@
 
-# Brainscore submission template
+# Brain-score sample model submission
 This is the template module, to add your neural network implementation and submit it to brain-score. It provides examples and template methods for an easy submission.
 
 ## Getting started
