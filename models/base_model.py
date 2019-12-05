@@ -1,7 +1,7 @@
 from test import test_models
 
 """
-
+Template module for a base model submission to brain-score
 """
 
 def get_model_list():

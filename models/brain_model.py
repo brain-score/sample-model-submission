@@ -2,6 +2,9 @@ from brainscore.model_interface import BrainModel
 
 from test import test_models
 
+"""
+Template module for a brain model submission to brain-score
+"""
 
 def get_model_list():
     """
