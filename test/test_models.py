@@ -19,14 +19,16 @@ def test_brain_model(module):
         assert layers is not None
         assert isinstance(layers, list)
         assert len(layers) > 0
-        model =module.get_model(model)
+        model = module.get_model(model)
         assert model is not None
         assert isinstance(model, BrainModel)
         test_brain_model_processing(model, module)
 
+
 def test_brain_model_processing(model, module):
     # to be done
     return
+
 
 def test_base_models(module):
     module = __import__(module)
@@ -61,7 +63,9 @@ class MockBenchmark(BenchmarkBase):
             ceiling_func=lambda: ceiling)
 
     def __call__(self, candidate: BrainModel):
-        image_names = ['grayscale.png', 'grayscale2.jpg', 'grayscale_alpha.png']
+        image_names = []
+        for i in range(1, 21):
+            image_names.append(f'images/{i}.png')
         stimulus_set = StimulusSet([{'image_id': image_name, 'image_label': image_name[::-1]}
                                     for image_name in image_names])
         stimulus_set.image_paths = {image_name: os.path.join(os.path.dirname(__file__), image_name)
@@ -77,22 +81,23 @@ class MockBenchmark(BenchmarkBase):
 
 
 def get_assambly():
-    assembly = NeuroidAssembly((np.arange(8 * 5) + np.random.standard_normal(8 * 5)).reshape((5, 8, 1)),
+    image_names = []
+    for i in range(1, 21):
+        image_names.append(f'images/{i}.png')
+    assembly = NeuroidAssembly((np.arange(40 * 5) + np.random.standard_normal(40 * 5)).reshape((5, 40, 1)),
                                coords={'image_id': (
                                    'presentation',
-                                   ['rgb.jpg', 'grayscale.png', 'grayscale2.jpg', 'grayscale_alpha.png'] * 2),
-                                   'object_name': ('presentation', ['a'] * 8),
-                                   'repetition': ('presentation', [1, 1, 1, 1, 2, 2, 2, 2]),
+                                   image_names * 2),
+                                   'object_name': ('presentation', ['a'] * 40),
+                                   'repetition': ('presentation', ([1] * 20 + [2] * 20) ),
                                    'neuroid_id': ('neuroid', np.arange(5)),
                                    'region': ('neuroid', ['IT'] * 5),
                                    'time_bin_start': ('time_bin', [70]),
                                    'time_bin_end': ('time_bin', [170])
                                },
                                dims=['neuroid', 'presentation', 'time_bin'])
-    image_names = ['rgb.jpg', 'grayscale.png', 'grayscale2.jpg', 'grayscale_alpha.png']
-    object_names = ['a'] * 4
     stimulus_set = StimulusSet([{'image_id': image_names[i], 'object_name': 'a', 'image_label': 'b'}
-                                for i in range(4)])
+                                for i in range(20)])
     stimulus_set.image_paths = {image_name: os.path.join(os.path.dirname(__file__), image_name)
                                 for image_name in image_names}
     stimulus_set.name = 'test'
