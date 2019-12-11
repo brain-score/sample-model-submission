@@ -17,8 +17,6 @@ from model_tools.brain_transformation import ModelCommitment
 
 def test_brain_model(module):
     module = __import__(module)
-    # func = getattr(module, 'get_model_list')
-    # func()
     for model in module.get_model_list():
         layers = module.get_layers(model)
         assert layers is not None
@@ -63,7 +61,7 @@ def test_processing(model, module):
 class _MockBenchmark(BenchmarkBase):
     def __init__(self):
         ceiling = Score([1, np.nan], coords={'aggregation': ['center', 'error']}, dims=['aggregation'])
-        assembly_repetition = get_assambly()
+        assembly_repetition = get_assembly()
         assert len(np.unique(assembly_repetition['region'])) == 1
         assert hasattr(assembly_repetition, 'repetition')
         self.region = 'IT'
@@ -85,13 +83,13 @@ class _MockBenchmark(BenchmarkBase):
         source_assembly = candidate.look_at(self.assembly.stimulus_set)
         # Do behavior task
         if do_behavior:
-            behaviour = candidate.start_task(BrainModel.Task.probabilities, self.assembly.stimulus_set)
-            propabilites = candidate.look_at(self.assembly.stimulus_set)
+            candidate.start_task(BrainModel.Task.probabilities, self.assembly.stimulus_set)
+            candidate.look_at(self.assembly.stimulus_set)
         raw_score = self._similarity_metric(source_assembly, self.assembly)
         return ceil_score(raw_score, self.ceiling)
 
 
-def get_assambly():
+def get_assembly():
     image_names = []
     for i in range(1, 21):
         image_names.append(f'images/{i}.png')
