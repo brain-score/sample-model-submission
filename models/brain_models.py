@@ -16,7 +16,7 @@ def get_model_list():
     return []
 
 
-def get_model():
+def get_model(name):
     """
     This method fetches an instance of a brain model. The instance has to implement the BrainModel interface in the
     brain-score project(see imports). To get a detailed explanation of how the interface hast to be implemented,

@@ -26,6 +26,7 @@ def test_brain_model(module):
         assert model is not None
         assert isinstance(model, BrainModel)
         test_brain_model_processing(model, module)
+    print('Test successful, you are ready to submit!')
 
 
 def test_brain_model_processing(model, module):
