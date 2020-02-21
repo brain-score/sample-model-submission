@@ -15,7 +15,7 @@ from brainscore.model_interface import BrainModel
 from model_tools.brain_transformation import ModelCommitment
 
 
-def test_brain_model(module):
+def test_brain_models(module):
     module = __import__(module)
     for model in module.get_model_list():
         layers = module.get_layers(model)

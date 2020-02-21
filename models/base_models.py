@@ -4,6 +4,7 @@ from test import test_models
 Template module for a base model submission to brain-score
 """
 
+
 def get_model_list():
     """
     This method defines all submitted model names. It returns a list of model names.
@@ -38,5 +39,8 @@ def get_layers(name):
     """
     return []
 
+
 if __name__ == '__main__':
+    # Use this method to ensure the correctness of the  BaeeModel implementations.
+    # It executes a mock run of brain-score benchmarks.
     test_models.test_base_models(__name__)
