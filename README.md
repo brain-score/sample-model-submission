@@ -67,8 +67,14 @@ An example of how to do that can be seen in this
 
 
 ### Create zip and submit   
-Once you're confident that your implementation works and the test run returns successfully, 
-you can submit the project by creating a zip file. 
+Once you are confident your code is correct you can prepare the project for submission. To test weather your project is installable, it is recommended to go through the following steps:
+
+Create a new python environment
+- Go to the project root and call `pip install .`
+- Run our checks by executing the main method in either `BaseModel.py` or `BrainModel.py`, depending on which you use
+- When the checks run without errors and further changes your project can be installed on our system.
+Note: Please double check file loading paths and change them to relative paths. You can *NOT* rely on the process root being the same as it is for the checks. To avoid problems here please work with paths, relative to the current module: `os.path.join(os.path.dirname(__file__), '/sth/model_weights.tar'`)
+To upload your project to our system you have to create a submission zip file.
 The file has to contain the projects root directory as a single entry, e.g. as follows:
 ```bash
 submission.zip
