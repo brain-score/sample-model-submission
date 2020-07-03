@@ -4,11 +4,14 @@ import torchvision.models
 from model_tools.activations.pytorch import PytorchWrapper
 from model_tools.activations.pytorch import load_preprocess_images
 
-from test import test_models
-
-
 # This is an example implementation for submitting alexnet as a pytorch model
 # If you use pytorch, don't forget to add it to the setup.py
+
+# Attention: It is important, that the wrapper identifier is unique per model!
+# The results will otherwise be the same due to brain-scores internal result caching mechanism.
+# Please load your pytorch model for usage in CPU. There won't be GPU's available for scoring your model.
+# If the model requires a GPU, contact the brain-score team directly.
+from model_tools.check_submission import check_models
 
 
 def get_model_list():
@@ -31,4 +34,4 @@ def get_layers(name):
 
 
 if __name__ == '__main__':
-    test_models.test_base_models(__name__)
+    check_models.check_base_models(__name__)
