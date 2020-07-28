@@ -1,6 +1,5 @@
 from brainscore.model_interface import BrainModel
-
-from test import test_models
+from model_tools.check_submission import check_models
 
 """
 Template module for a brain model submission to brain-score
@@ -30,4 +29,4 @@ def get_model(name):
 if __name__ == '__main__':
     # Use this method to ensure the correctness of the BrainModel implementations.
     # It executes a mock run of brain-score benchmarks.
-    test_models.test_brain_models(__name__)
+    check_models.check_brain_models(__name__)

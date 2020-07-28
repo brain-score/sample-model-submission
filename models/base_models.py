@@ -1,4 +1,5 @@
-from test import test_models
+from model_tools.check_submission import check_models
+
 
 """
 Template module for a base model submission to brain-score
@@ -43,4 +44,4 @@ def get_layers(name):
 if __name__ == '__main__':
     # Use this method to ensure the correctness of the  BaeeModel implementations.
     # It executes a mock run of brain-score benchmarks.
-    test_models.test_base_models(__name__)
+    check_models.check_base_models(__name__)
