@@ -1,6 +1,5 @@
 from model_tools.check_submission import check_models
 
-
 """
 Template module for a base model submission to brain-score
 """
@@ -39,6 +38,13 @@ def get_layers(name):
     :return: a list of strings containing all layers, that should be considered as brain area.
     """
     return []
+
+
+def get_bibtex(model_identifier):
+    """
+    A method returning the bibtex reference of the requested model as a string.
+    """
+    return ''
 
 
 if __name__ == '__main__':

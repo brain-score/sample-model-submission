@@ -1,9 +1,9 @@
-from brainscore.model_interface import BrainModel
 from model_tools.check_submission import check_models
 
 """
 Template module for a brain model submission to brain-score
 """
+
 
 def get_model_list():
     """
@@ -15,7 +15,7 @@ def get_model_list():
     return []
 
 
-def get_model(name):
+def get_model(model_identifier):
     """
     This method fetches an instance of a brain model. The instance has to implement the BrainModel interface in the
     brain-score project(see imports). To get a detailed explanation of how the interface hast to be implemented,
@@ -24,6 +24,13 @@ def get_model(name):
     :return: the model instance, which implements the BrainModel interface
     """
     return
+
+
+def get_bibtex(model_identifier):
+    """
+    A method returning the bibtex reference of the requested model as a string.
+    """
+    return ''
 
 
 if __name__ == '__main__':

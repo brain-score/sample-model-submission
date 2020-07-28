@@ -25,6 +25,14 @@ def get_layers(name):
     return [f'block{i + 1}_pool' for i in range(5)] + ['fc1', 'fc2']
 
 
+def get_bibtex(model_identifier):
+    return """@InProceedings{Simonyan15,
+              author       = "Karen Simonyan and Andrew Zisserman",
+              title        = "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+              booktitle    = "International Conference on Learning Representations",
+              year         = "2015",
+            }"""
+
 if __name__ == '__main__':
     test_models.test_base_models(__name__)
 
