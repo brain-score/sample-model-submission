@@ -45,5 +45,6 @@ def get_bibtex(model_identifier):
                 url = {http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}
                 }"""
 
+
 if __name__ == '__main__':
     check_models.check_base_models(__name__)
