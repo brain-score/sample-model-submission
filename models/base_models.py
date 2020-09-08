@@ -1,8 +1,9 @@
-from test import test_models
+from model_tools.check_submission import check_models
 
 """
 Template module for a base model submission to brain-score
 """
+
 
 def get_model_list():
     """
@@ -38,5 +39,15 @@ def get_layers(name):
     """
     return []
 
+
+def get_bibtex(model_identifier):
+    """
+    A method returning the bibtex reference of the requested model as a string.
+    """
+    return ''
+
+
 if __name__ == '__main__':
-    test_models.test_base_models(__name__)
+    # Use this method to ensure the correctness of the  BaeeModel implementations.
+    # It executes a mock run of brain-score benchmarks.
+    check_models.check_base_models(__name__)
