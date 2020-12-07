@@ -31,7 +31,7 @@ The submission can contain multiple models. To create a submission follow these 
 
 #### Add modules to existing project
 As a second way you can add the required modules to an existing project. 
-To do so, copy the packages `models` and `test` to the existing project. 
+To do so, copy the package `models` to the existing project. 
 Make sure to add all the dependencies listed in setup.py to the other project. 
 You can check if your submission is correct by executing the main method of the modules in the `models` directory.
 
