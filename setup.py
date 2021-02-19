@@ -7,10 +7,7 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    "model-tools @ git+https://github.com/brain-score/model-tools",
-    "numpy",
-    'xarray',
-    "result_caching @ git+https://github.com/mschrimpf/result_caching"
+    "model-tools @ git+https://github.com/brain-score/model-tools"
 ]
 
 setup(
