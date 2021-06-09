@@ -1,9 +1,14 @@
 from model_tools.check_submission import check_models
 
+# from pytorch.py:
+import functools
+import torchvision.models
+from model_tools.activations.pytorch import PytorchWrapper
+from model_tools.activations.pytorch import load_preprocess_images
+
 """
 Template module for a base model submission to brain-score
 """
-
 
 def get_model_list():
     """
@@ -12,7 +17,9 @@ def get_model_list():
     If the submission contains only one model, return a one item list.
     :return: a list of model string names
     """
-    return []
+
+    # from pytorch.py:
+    return ['alexnet']
 
 
 def get_model(name):
@@ -24,7 +31,14 @@ def get_model(name):
     :param name: the name of the model to fetch
     :return: the model instance
     """
-    return
+
+    # from pytorch.py:
+    assert name == 'alexnet'
+    model = torchvision.models.alexnet(pretrained=True)
+    preprocessing = functools.partial(load_preprocess_images, image_size=224)
+    wrapper = PytorchWrapper(identifier='alexnet', model=model, preprocessing=preprocessing)
+    wrapper.image_size = 224
+    return wrapper
 
 
 def get_layers(name):
@@ -37,14 +51,29 @@ def get_layers(name):
     :param name: the name of the model, to return the layers for
     :return: a list of strings containing all layers, that should be considered as brain area.
     """
-    return []
+
+    # from pytorch.py:
+    assert name == 'alexnet'
+    return ['features.2', 'features.5', 'features.7', 'features.9', 'features.12',
+            'classifier.2', 'classifier.5']
 
 
 def get_bibtex(model_identifier):
     """
     A method returning the bibtex reference of the requested model as a string.
     """
-    return ''
+
+    # from pytorch.py:
+    return """@incollection{NIPS2012_4824,
+                  title = {ImageNet Classification with Deep Convolutional Neural Networks},
+                  author = {Alex Krizhevsky and Sutskever, Ilya and Hinton, Geoffrey E},
+                  booktitle = {Advances in Neural Information Processing Systems 25},
+                  editor = {F. Pereira and C. J. C. Burges and L. Bottou and K. Q. Weinberger},
+                  pages = {1097--1105},
+                  year = {2012},
+                  publisher = {Curran Associates, Inc.},
+                  url = {http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}
+                  }"""
 
 
 if __name__ == '__main__':
