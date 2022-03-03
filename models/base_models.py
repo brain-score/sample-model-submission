@@ -1,14 +1,16 @@
+import torch
 from model_tools.check_submission import check_models
-
-# from pytorch.py:
 import functools
-import torchvision.models
-from model_tools.activations.pytorch import PytorchWrapper
 from model_tools.activations.pytorch import load_preprocess_images
+from model_tools.activations.onnx import OnnxWrapper, get_final_model
+import warnings
+warnings.filterwarnings("ignore")
+
 
 """
 Template module for a base model submission to brain-score
 """
+
 
 def get_model_list():
     """
@@ -17,31 +19,10 @@ def get_model_list():
     If the submission contains only one model, return a one item list.
     :return: a list of model string names
     """
-
-    # from pytorch.py:
-    return ['alexnet']
+    return ['resnet18']
 
 
-def get_model(name):
-    """
-    This method fetches an instance of a base model. The instance has to be callable and return a xarray object,
-    containing activations. There exist standard wrapper implementations for common libraries, like pytorch and
-    keras. Checkout the examples folder, to see more. For custom implementations check out the implementation of the
-    wrappers.
-    :param name: the name of the model to fetch
-    :return: the model instance
-    """
-
-    # from pytorch.py:
-    assert name == 'alexnet'
-    model = torchvision.models.alexnet(pretrained=True)
-    preprocessing = functools.partial(load_preprocess_images, image_size=224)
-    wrapper = PytorchWrapper(identifier='alexnet', model=model, preprocessing=preprocessing)
-    wrapper.image_size = 224
-    return wrapper
-
-
-def get_layers(name):
+def process_model():
     """
     This method returns a list of string layer names to consider per model. The benchmarks maps brain regions to
     layers and uses this list as a set of possible layers. The lists doesn't have to contain all layers, the less the
@@ -52,10 +33,39 @@ def get_layers(name):
     :return: a list of strings containing all layers, that should be considered as brain area.
     """
 
-    # from pytorch.py:
-    assert name == 'alexnet'
-    return ['features.2', 'features.5', 'features.7', 'features.9', 'features.12',
-            'classifier.2', 'classifier.5']
+    # Pytorch Testing:
+    models = ["alexnet", "densenet161", "resnet18", "vgg16", "squeezenet1_1", "resnet152"]
+    model_to_choose = models[0]
+    model = torch.hub.load('pytorch/vision:v0.10.0', model_to_choose, pretrained=True)
+    name = model_to_choose
+
+    # # ONNX Testing:
+    # model = onnx.load("googlenet-3.onnx")
+    # onnx.checker.check_model(model)
+    # name = "googlenet-3"
+
+    # can be either 'onnx' or 'pytorch'. If pytorch model, we will convert to ONNX for you.
+    framework = 'pytorch'
+
+    # define these hyperparameters for your model
+    input_image_size = 224
+    batch_size = 10
+    in_channels = 3  # For color images, in_channels = 3. For grayscale, it is 1.
+
+    # convert model from pytorch to ONNX
+    onnx_model, layers = get_final_model(framework, batch_size, in_channels, input_image_size, model, name)
+    print(f"All Model Layers:\n{layers}")
+
+    # you can return all layers, or just a few with the layers list. Default is the first layer only:
+    layers = layers[0:2]
+    print(f"Selected Model Layers:\n{layers}")
+
+    # Standard Brain-Score Processing
+    preprocessing = functools.partial(load_preprocess_images, image_size=input_image_size)
+    wrapper = OnnxWrapper(identifier=name, model=onnx_model, preprocessing=preprocessing)
+    wrapper.image_size = input_image_size
+
+    return wrapper, layers
 
 
 def get_bibtex(model_identifier):
@@ -63,7 +73,6 @@ def get_bibtex(model_identifier):
     A method returning the bibtex reference of the requested model as a string.
     """
 
-    # from pytorch.py:
     return """@incollection{NIPS2012_4824,
                   title = {ImageNet Classification with Deep Convolutional Neural Networks},
                   author = {Alex Krizhevsky and Sutskever, Ilya and Hinton, Geoffrey E},
